@@ -1,0 +1,27 @@
+{
+  "name": "fighting-game-assignment-itaca",
+  "version": "1.0.0",
+  "description": "Assignment per colloquio Itaca",
+  "license": "ISC",
+  "author": "Danilo Coccimiglio",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node --esm src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^24.10.1",
+    "mongodb-memory-server": "^10.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.0.1"
+  }
+}
