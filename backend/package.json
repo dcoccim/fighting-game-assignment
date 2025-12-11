@@ -5,14 +5,15 @@
   "license": "ISC",
   "author": "Danilo Coccimiglio",
   "type": "module",
-  "main": "dist/server.js",
+  "main": "dist/backend/src/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node --esm src/server.ts",
+    "start": "node dist/backend/src/server.js",
+    "dev": "ts-node --esm src/backend/src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^24.10.1",
@@ -21,6 +22,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.2.1",
     "mongoose": "^9.0.1"
   }

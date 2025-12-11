@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import type { CharacterClassType } from "../types/types.js";
+import type { CharacterClassType } from "@shared/types.js";
 
 export interface CharacterClassDocument extends Document, CharacterClassType {}
 
@@ -15,7 +15,7 @@ const StatsModifierSchema = new mongoose.Schema({
 const SkillSchema = new mongoose.Schema({
     name: { type: String, required: true },
     baseDamage: { type: Number, required: true },
-    elementalType: { type: String, required: true, enum: ['fire', 'water', 'thunder'] }
+    elementalType: { type: String, required: false, enum: ['fire', 'water', 'thunder'] }
 }, { _id: false });
 
 const CharacterClassSchema = new mongoose.Schema<CharacterClassDocument>({

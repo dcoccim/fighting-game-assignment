@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { EquippableModel, type EquippableDocument } from "./Equippable.schema.js";
-import type { WeaponType } from "../types/types.js";
+import type { WeaponType } from "@shared/types.js";
 
 export interface WeaponDocument extends EquippableDocument {
     weaponType: WeaponType;

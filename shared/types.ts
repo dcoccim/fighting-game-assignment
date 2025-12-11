@@ -18,7 +18,7 @@ export type ElementalStatsType = {
 export type ElementalStatsModifierType = ElementalStatsType;
 
 export type EquippableType = {
-    id: string;
+    id?: string;
     name: string;
     kind: 'weapon' | 'headGear' | 'bodyGear' | 'legGear';
     stats: StatsModifierType;
@@ -27,39 +27,39 @@ export type EquippableType = {
 
 export type WeaponType = 'sword' | 'dagger' | 'staff'
 
-export interface Weapon extends EquippableType {
+export interface IWeapon extends EquippableType {
     kind: 'weapon';
     weaponType: WeaponType;
     baseDamage: number;
 }
 
-export interface HeadGear extends EquippableType {
+export interface IHeadGear extends EquippableType {
     kind: 'headGear'
 };
 
-export interface BodyGear extends EquippableType {
+export interface IBodyGear extends EquippableType {
     kind: 'bodyGear'
 };
 
-export interface LegGear extends EquippableType {
+export interface ILegGear extends EquippableType {
     kind: 'legGear'
 };
 
 export type EquipmentType = {
-    weapon: Weapon | null;
-    headGear: HeadGear | null;
-    bodyGear: BodyGear | null;
-    legGear: LegGear | null;
+    weapon: IWeapon | null;
+    headGear: IHeadGear | null;
+    bodyGear: IBodyGear | null;
+    legGear: ILegGear | null;
 }
 
 export type SkillType = {
     name: string;
     baseDamage: number;
-    elementalType: keyof ElementalStatsType;
+    elementalType?: keyof ElementalStatsType;
 }
 
 export type CharacterClassType = {
-    id: string;
+    id?: string;
     name: string;
     modifier: StatsModifierType;
     preferredWeapon: WeaponType;
@@ -67,7 +67,7 @@ export type CharacterClassType = {
 }
 
 export type CharacterType = {
-    id: string | null;
+    id?: string | null;
     name: string;
     stats: StatsType;
     characterClass: CharacterClassType;
@@ -77,7 +77,7 @@ export type CharacterType = {
     losses: number;
 }
 
-export type Arena = {
+export type ArenaType = {
     characterList: CharacterType[];
     player1: CharacterType;
     player2: CharacterType;

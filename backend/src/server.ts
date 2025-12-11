@@ -1,11 +1,25 @@
 import express from 'express';
+import cors from 'cors';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { initGame } from './utils/initGame.js';
 import mongoose from 'mongoose';
+import apiRoutes from './routes/index.routes.js';
 
 const app = express();
 
 const PORT = 3000;
+const ORIGIN = 'http://localhost:5173';
+
+app.use(cors({
+  origin: ORIGIN,
+  credentials: true,
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+}));
+
+app.use(express.json());
+
+app.use('/api', apiRoutes);
 
 MongoMemoryServer.create().then((mongoServer) => {
     const mongoUri = mongoServer.getUri();

@@ -1,4 +1,4 @@
-import type { ElementalStatsModifierType, ElementalStatsType, StatsModifierType, StatsType } from "../types/types.js";
+import type { ElementalStatsModifierType, ElementalStatsType, StatsModifierType, StatsType } from "@shared/types.js";
 
 export class Stats implements StatsType {
     hp: number;
@@ -8,13 +8,13 @@ export class Stats implements StatsType {
     mDef: number;
     speed: number;
 
-    constructor(data: StatsType) {
-        this.hp = data.hp;
-        this.att = data.att;
-        this.mAtt = data.mAtt;
-        this.def = data.def;
-        this.mDef = data.mDef;
-        this.speed = data.speed;
+    constructor() {
+        this.hp = 100;
+        this.att = 10;
+        this.mAtt = 10;
+        this.def = 10;
+        this.mDef = 10;
+        this.speed = 10;
     }
 
     applyModifier(modifier: Partial<StatsModifierType>): void {
@@ -32,10 +32,10 @@ export class ElementalStats implements ElementalStatsType {
     water: number;
     thunder: number;
 
-    constructor(data: ElementalStatsType) {
-        this.fire = data.fire;
-        this.water = data.water;
-        this.thunder = data.thunder;
+    constructor() {
+        this.fire = 0;
+        this.water = 0;
+        this.thunder = 0;
     }
 
     applyModifier(modifier: Partial<ElementalStatsModifierType>): void {

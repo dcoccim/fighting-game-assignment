@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose";
-import type { EquippableType } from "../types/types.js";
+import type { EquippableType } from "@shared/types.js";
 
 export interface EquippableDocument extends Document, EquippableType {}
 

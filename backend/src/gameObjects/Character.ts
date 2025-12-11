@@ -1,4 +1,5 @@
-import type { CharacterClassType, CharacterType, ElementalStatsModifierType, ElementalStatsType, EquipmentType, SkillType, StatsModifierType, StatsType } from "../types/types.js";
+import type { CharacterClassType, CharacterType, ElementalStatsModifierType, ElementalStatsType, EquipmentType, SkillType, StatsModifierType, StatsType } from "@shared/types.js";
+import { Equipment } from "./Equipment.js";
 import { ElementalStats, Stats } from "./Stats.js";
 
 export class Character implements CharacterType {
@@ -11,13 +12,13 @@ export class Character implements CharacterType {
     wins: number;
     losses: number;
 
-    constructor(data: CharacterType) {
-        this.id = data.id;
+    constructor(data: { name: string; characterClass: CharacterClassType; }) {
+        this.id = null;
         this.name = data.name;
         this.characterClass = data.characterClass;
-        this.stats = new Stats(data.stats);
-        this.elementalStats = new ElementalStats(data.elementalStats);
-        this.equipment = data.equipment;
+        this.stats = new Stats();
+        this.elementalStats = new ElementalStats();
+        this.equipment = new Equipment();
         this.wins = 0;
         this.losses = 0;
     }
