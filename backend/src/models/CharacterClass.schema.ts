@@ -3,7 +3,7 @@ import type { CharacterClassType } from "../types/types.js";
 
 export interface CharacterClassDocument extends Document, CharacterClassType {}
 
-const BaseStatsSchema = new mongoose.Schema({
+const StatsModifierSchema = new mongoose.Schema({
     hp: { type: Number, required: true },
     att: { type: Number, required: true },
     def: { type: Number, required: true },
@@ -20,7 +20,7 @@ const SkillSchema = new mongoose.Schema({
 
 const CharacterClassSchema = new mongoose.Schema<CharacterClassDocument>({
     name: { type: String, required: true },
-    baseStats: { type: BaseStatsSchema, required: true },
+    modifier: { type: StatsModifierSchema, required: true },
     preferredWeapon: { type: String, required: true, enum: ['sword', 'dagger', 'staff'] },
     skills: { type: [SkillSchema], required: true }
 });

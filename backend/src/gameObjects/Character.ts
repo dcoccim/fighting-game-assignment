@@ -1,60 +1,63 @@
-import type { CharacterClassType, CharacterType, ElementalStatsType, EquipmentType, SkillType, StatsType } from "../types/types.js";
+import type { CharacterClassType, CharacterType, ElementalStatsModifierType, ElementalStatsType, EquipmentType, SkillType, StatsModifierType, StatsType } from "../types/types.js";
+import { ElementalStats, Stats } from "./Stats.js";
 
 export class Character implements CharacterType {
-    id: string;
+    id: string | null;
     name: string;
     characterClass: CharacterClassType;
-    stats: StatsType;
-    elementalStats: ElementalStatsType;
+    stats: Stats;
+    elementalStats: ElementalStats;
     equipment: EquipmentType;
-    wins: number = 0;
-    losses: number = 0;
+    wins: number;
+    losses: number;
 
     constructor(data: CharacterType) {
         this.id = data.id;
         this.name = data.name;
         this.characterClass = data.characterClass;
-        this.stats = { ...data.characterClass.baseStats };
-        this.elementalStats = data.elementalStats;
+        this.stats = new Stats(data.stats);
+        this.elementalStats = new ElementalStats(data.elementalStats);
         this.equipment = data.equipment;
+        this.wins = 0;
+        this.losses = 0;
     }
 
-    getTotalStats(): StatsType {
-        const totalStats: StatsType = { ...this.characterClass.baseStats };
+    calculateTotalStats(): void {
+        const totalModifier: Partial<StatsModifierType> = this.characterClass.modifier;
 
         const slots: (keyof EquipmentType)[] = ['weapon', 'headGear', 'bodyGear', 'legGear'];
 
         for(const slot of slots) {
             const item = this.equipment[slot];
             if(!item) continue;
-            totalStats.hp += item.stats.hp || 0;
-            totalStats.att += item.stats.att || 0;
+            totalModifier.hp = (totalModifier.hp || 0) + (item.stats.hp || 0);
+            totalModifier.att = (totalModifier.att || 0) + (item.stats.att || 0);
             if(item.kind === 'weapon') {
-                totalStats.att += (item as any).baseDamage || 0;
+                totalModifier.att = (totalModifier.att || 0) + item.baseDamage;
             }
-            totalStats.mAtt += item.stats.mAtt || 0;
-            totalStats.def += item.stats.def || 0;
-            totalStats.mDef += item.stats.mDef || 0;
-            totalStats.speed += item.stats.speed || 0;
+            totalModifier.mAtt = (totalModifier.mAtt || 0) + (item.stats.mAtt || 0);
+            totalModifier.def = (totalModifier.def || 0) + (item.stats.def || 0);
+            totalModifier.mDef = (totalModifier.mDef || 0) + (item.stats.mDef || 0);
+            totalModifier.speed = (totalModifier.speed || 0) + (item.stats.speed || 0);
         }
 
-        return totalStats;
+        this.stats.applyModifier(totalModifier);
     }
 
-    getTotalElem(): ElementalStatsType {
+    calculateTotalElem(): void {
         
-        const totalElem: ElementalStatsType = this.elementalStats;
+        const totalElemModifier: ElementalStatsModifierType = { fire: 0, water: 0, thunder: 0 };
 
         const slots: (keyof EquipmentType)[] = ['weapon', 'headGear', 'bodyGear', 'legGear'];
 
         for(const slot of slots) {
             const item = this.equipment[slot];
             if(!item) continue;
-            totalElem.fire += item.elementalStats.fire || 0;
-            totalElem.water += item.elementalStats.water || 0;
-            totalElem.thunder += item.elementalStats.thunder || 0;
+            totalElemModifier.fire += item.elementalStats.fire;
+            totalElemModifier.water += item.elementalStats.water;
+            totalElemModifier.thunder += item.elementalStats.thunder;
         }
 
-        return totalElem;
+        this.elementalStats.applyModifier(totalElemModifier);
     }
 }

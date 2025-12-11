@@ -19,6 +19,7 @@ async function addCharacter(character: CharacterType): Promise<CharacterType>{
         id: character.id,
         name: character.name,
         characterClass: new mongoose.Types.ObjectId((character.characterClass as any)._id),
+        stats: character.stats,
         elementalStats: character.elementalStats,
         equipment: {
             weapon: character.equipment.weapon ? new mongoose.Types.ObjectId((character.equipment.weapon as any)._id) : null,

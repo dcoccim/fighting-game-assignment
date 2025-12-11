@@ -12,7 +12,7 @@ export type StatsModifierType = StatsType;
 export type ElementalStatsType = {
     fire: number;
     water: number;
-    thunder: number; 
+    thunder: number;
 }
 
 export type ElementalStatsModifierType = ElementalStatsType;
@@ -61,14 +61,15 @@ export type SkillType = {
 export type CharacterClassType = {
     id: string;
     name: string;
-    baseStats: StatsType;
+    modifier: StatsModifierType;
     preferredWeapon: WeaponType;
     skills: SkillType[];
 }
 
 export type CharacterType = {
-    id: string;
+    id: string | null;
     name: string;
+    stats: StatsType;
     characterClass: CharacterClassType;
     elementalStats: ElementalStatsType;
     equipment: EquipmentType;

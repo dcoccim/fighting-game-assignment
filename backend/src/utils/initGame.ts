@@ -7,13 +7,13 @@ export async function initGame(): Promise<void> {
     const mageClass: CharacterClassType = {
         id: null as any,
         name: "Mage",
-        baseStats: {
-            hp: 80,
-            att: 30,
-            mAtt: 70,
-            def: 20,
-            mDef: 50,
-            speed: 40
+        modifier: {
+            hp: -10,
+            att: 0,
+            mAtt: 20,
+            def: -5,
+            mDef: 10,
+            speed: 0
         },
         preferredWeapon: "staff",
         skills: [{
@@ -58,11 +58,19 @@ export async function initGame(): Promise<void> {
     const addedClass = await addCharacterClass(mageClass);
     console.log("Added class:", addedClass);
     const firstCharacter: CharacterType = {
-        id: "char_001",
+        id: null,
         name: "Gandalf",
         characterClass: addedClass,
         wins: 0,
         losses: 0,
+        stats: {
+            hp: 80,
+            att: 30,
+            mAtt: 70,
+            def: 20,
+            mDef: 50,
+            speed: 40
+        },
         elementalStats: {
             fire: 0,
             water: 0,
