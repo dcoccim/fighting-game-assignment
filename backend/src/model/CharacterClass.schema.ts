@@ -15,6 +15,7 @@ const StatsModifierSchema = new mongoose.Schema({
 const SkillSchema = new mongoose.Schema({
     name: { type: String, required: true },
     baseDamage: { type: Number, required: true },
+    isMagic: { type: Boolean, required: true },
     elementalType: { type: String, required: false, enum: ['fire', 'water', 'thunder'] }
 }, { _id: false });
 

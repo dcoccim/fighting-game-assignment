@@ -55,6 +55,7 @@ export type EquipmentType = {
 export type SkillType = {
     name: string;
     baseDamage: number;
+    isMagic: boolean;
     elementalType?: keyof ElementalStatsType;
 }
 
@@ -77,9 +78,13 @@ export type CharacterType = {
     losses: number;
 }
 
+export type Fighter = CharacterType & { 
+    selectSkill: (opponent: CharacterType) => SkillType;
+    applyDamage: (amount: number) => void;
+}; 
+
 export type ArenaType = {
-    characterList: CharacterType[];
-    player1: CharacterType;
-    player2: CharacterType;
+    currentAttacking: CharacterType;
+    currentDefending: CharacterType;
     turn: number;
 }

@@ -17,17 +17,20 @@ export const seedData = {
                 {
                     name: "Fire",
                     baseDamage: 40,
-                    elementalType: "fire"
+                    elementalType: "fire",
+                    isMagic: true
                 },
                 {
                     name: "Blizzard",
                     baseDamage: 35,
-                    elementalType: "water"
+                    elementalType: "water",
+                    isMagic: true
                 },
                 {
                     name: "Thunder",
                     baseDamage: 45,
-                    elementalType: "thunder"
+                    elementalType: "thunder",
+                    isMagic: true
                 }
             ] as SkillType[]
         },
@@ -46,14 +49,17 @@ export const seedData = {
                 {
                     name: "Slash",
                     baseDamage: 50,
+                    isMagic: false
                 },
                 {
                     name: "Smash",
                     baseDamage: 45,
+                    isMagic: false
                 },
                 {
                     name: "Charge",
                     baseDamage: 40,
+                    isMagic: false
                 }
             ] as SkillType[]
         }

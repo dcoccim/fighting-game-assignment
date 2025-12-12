@@ -77,4 +77,28 @@ export class Character implements CharacterType {
         }
         this.equipment.addToSlot(slot, item);
     }
+
+    selectSkill(opponent: CharacterType): SkillType {
+        if(this.characterClass.skills.length === 0) {
+            return {
+                name: "Basic Attack",
+                baseDamage: 5,
+                isMagic: false
+            }
+        }
+        const selectedSkill = this.characterClass.skills[Math.floor(Math.random() * this.characterClass.skills.length)];
+        if(!selectedSkill) {
+            return {
+                name: "Basic Attack",
+                baseDamage: 5,
+                isMagic: false
+            };
+        }
+        return selectedSkill;
+    }
+
+    applyDamage(amount: number): void {
+        this.stats.hp -= amount;
+        if(this.stats.hp < 0) this.stats.hp = 0;
+    }
 }

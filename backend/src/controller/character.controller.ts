@@ -79,6 +79,6 @@ export async function updateCharacterEquip(req: Request, res: Response): Promise
     }
 }
 
-export function deleteCharacter(req: Request, res: Response): void {
-    res.status(200).send("Character deleted");
+export function battle(req: Request, res: Response): void {
+    res.status(200).send("Battle executed");
 }
