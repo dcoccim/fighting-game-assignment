@@ -4,11 +4,25 @@ import { EquipmentList } from "./EquipmentList/EquipmentList";
 import { ElementalStatsList } from "./ElementalStatsList/ElementalStatsList";
 import { StatsList } from "./StatsList/StatsList";
 
-export function CharacterCard({ character, expanded, equippableList, onCharacterUpdate, onToggle }: CharacterCardProps) {
+export function CharacterCard({ 
+    character, 
+    expanded, 
+    equippableList, 
+    selected, 
+    onSelect, 
+    onCharacterUpdate, 
+    onExpandToggle 
+}: CharacterCardProps) {
 
     return (
         <div className="character-card">
-            <div className="character-card-header" onClick={onToggle}>
+            <div className="character-card-header" onClick={onExpandToggle}>
+                <input 
+                    type="checkbox" 
+                    checked={selected} 
+                    onChange={e => onSelect(e.target.checked)} 
+                    onClick={e => e.stopPropagation()} 
+                />
                 <h3>{character.name}</h3>
                 <p>{character.characterClass.name}</p>
             </div>

@@ -11,6 +11,10 @@ export function useApp() {
         bodyGear: [],
         legGear: []
     });
+    const [selectedChars, setSelectedChars] = useState<{ character1: CharacterType | null; character2: CharacterType | null }>({
+        character1: null,
+        character2: null
+    });
 
     useEffect(() => {
         fetch('http://localhost:3000/api/characters')
@@ -32,6 +36,8 @@ export function useApp() {
     return {
         characterList,
         setCharacterList,
-        equippableList
+        equippableList,
+        selectedChars,
+        setSelectedChars
     };
 }

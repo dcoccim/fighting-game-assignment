@@ -5,4 +5,6 @@ export type CharacterListProps = {
     characterList: CharacterType[];
     setCharacterList: (characterList: CharacterType[]) => void;
     equippableList: EquippableListType;
+    selectedChars: { character1: CharacterType | null; character2: CharacterType | null };
+    setSelectedChars: (selectedChars: { character1: CharacterType | null; character2: CharacterType | null }) => void;
 }

@@ -5,6 +5,8 @@ export interface CharacterCardProps {
     character: CharacterType;
     expanded: boolean;
     equippableList: EquippableListType;
+    selected: boolean;
     onCharacterUpdate: (updatedCharacter: CharacterType) => void;
-    onToggle: () => void;
+    onSelect: (selected: boolean) => void;
+    onExpandToggle: () => void;
 }

@@ -1,10 +1,6 @@
-import type { CharacterType } from "../../../../shared/types";
 import { handleSubmit } from "./characterForm.functions";
 import { useCharacterForm } from "./characterForm.hooks";
-
-interface CharacterFormProps {
-  onCharacterAdded?: (char: CharacterType) => void;
-}
+import type { CharacterFormProps } from "./characterForm.types";
 
 export function CharacterForm({ onCharacterAdded }: CharacterFormProps) {
 
