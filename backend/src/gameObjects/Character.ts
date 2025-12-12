@@ -1,6 +1,7 @@
-import type { CharacterClassType, CharacterType, ElementalStatsModifierType, ElementalStatsType, EquipmentType, SkillType, StatsModifierType, StatsType } from "@shared/types.js";
+import type { CharacterClassType, CharacterType, ElementalStatsModifierType, ElementalStatsType, EquipmentType, EquippableType, SkillType, StatsModifierType, StatsType } from "@shared/types.js";
 import { Equipment } from "./Equipment.js";
 import { ElementalStats, Stats } from "./Stats.js";
+import { IncompatibleEquipError } from "../utils/errors.js";
 
 export class Character implements CharacterType {
     id: string | null;
@@ -8,22 +9,30 @@ export class Character implements CharacterType {
     characterClass: CharacterClassType;
     stats: Stats;
     elementalStats: ElementalStats;
-    equipment: EquipmentType;
+    equipment: Equipment;
     wins: number;
     losses: number;
 
-    constructor(data: { name: string; characterClass: CharacterClassType; }) {
-        this.id = null;
+    constructor(data: {
+        id?: string | null; 
+        name: string; 
+        characterClass: CharacterClassType;
+        equipment?: EquipmentType; 
+        wins?: number; 
+        losses?: number; 
+    }) {
+        this.id = data.id ?? null;
         this.name = data.name;
         this.characterClass = data.characterClass;
         this.stats = new Stats();
         this.elementalStats = new ElementalStats();
-        this.equipment = new Equipment();
-        this.wins = 0;
-        this.losses = 0;
+        this.equipment = new Equipment(data.equipment);
+        this.wins = data.wins ?? 0;
+        this.losses = data.losses ?? 0;
     }
-
+    
     calculateTotalStats(): void {
+
         const totalModifier: Partial<StatsModifierType> = this.characterClass.modifier;
 
         const slots: (keyof EquipmentType)[] = ['weapon', 'headGear', 'bodyGear', 'legGear'];
@@ -60,5 +69,12 @@ export class Character implements CharacterType {
         }
 
         this.elementalStats.applyModifier(totalElemModifier);
+    }
+
+    equipItem(slot: keyof EquipmentType, item: any | null): void {
+        if(item && item.kind === 'weapon' && this.characterClass.preferredWeapon !== item.weaponType) {
+            throw new IncompatibleEquipError(`Cannot equip weapon of type ${item.weaponType} for character class ${this.characterClass.name}`);
+        }
+        this.equipment.addToSlot(slot, item);
     }
 }

@@ -1,3 +1,5 @@
+import type { EquippableListResponseDTO } from "./equippable.dto.js";
+
 export type CreateCharacterDTO = {
     name: string;
     characterClassId: string;
@@ -36,13 +38,23 @@ export type CharacterResponseDTO = {
     };
     equipment: {
         weapon: {
+            id: string;
             name: string;
             weaponType: string;
-        } | null;
-        headGear: string | null;
-        bodyGear: string | null;
-        legGear: string | null;
-    };
+        } | null,
+        headGear: {
+            id: string;
+            name: string;
+        } | null,
+        bodyGear: {
+            id: string;
+            name: string;
+        } | null,
+        legGear: {
+            id: string;
+            name: string;
+        } | null,
+    }
     wins: number;
     losses: number;
 };

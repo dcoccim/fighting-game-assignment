@@ -5,12 +5,12 @@ import { CharacterList } from './components/CharacterList/CharacterList';
 
 function App() {
   
-  const { characterList, setCharacterList } = useApp();
+  const { characterList, setCharacterList, equippableList } = useApp();
 
   return (
     <>    
       <CharacterForm onCharacterAdded={char => setCharacterList([...characterList, char])} />
-      <CharacterList characterList={characterList} />
+      <CharacterList characterList={characterList} setCharacterList={setCharacterList} equippableList={equippableList} />
     </>
   )
 }

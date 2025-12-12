@@ -3,8 +3,8 @@ import {
     postCharacter,
     getCharacter,
     getAllCharacters,
-    updateCharacter,
-    deleteCharacter,
+    updateCharacterEquip,
+    deleteCharacter
 } from "../controller/character.controller.js";
 
 const router = Router();
@@ -12,7 +12,7 @@ const router = Router();
 router.post("/", postCharacter);
 router.get("/:id", getCharacter);
 router.get("/", getAllCharacters);
-router.put("/:id", updateCharacter);
+router.put("/:id/equip", updateCharacterEquip);
 router.delete("/:id", deleteCharacter);
 
 export default router;

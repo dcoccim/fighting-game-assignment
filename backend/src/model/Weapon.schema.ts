@@ -12,4 +12,8 @@ const WeaponSchema = new mongoose.Schema<Partial<WeaponDocument>>({
     baseDamage: { type: Number, required: true }
 });
 
+EquippableModel.discriminator('headGear', new mongoose.Schema({}, {_id: false}));
+EquippableModel.discriminator('bodyGear', new mongoose.Schema({}, {_id: false}));
+EquippableModel.discriminator('legGear', new mongoose.Schema({}, {_id: false}));
+
 export const WeaponModel = EquippableModel.discriminator<WeaponDocument>('weapon', WeaponSchema);

@@ -29,4 +29,16 @@ async function getEquippableById(id: string): Promise<EquippableType | null> {
     }
 }
 
-export default { addEquippable, getEquippableById };
+async function getAllEquippables(): Promise<EquippableType[]> {
+    try {
+        console.debug("Fetching all equippable items...");
+        const equippables = await equippableRepository.getAllEquippables();
+        console.info(`Fetched ${equippables.length} equippable items.`);
+        return equippables;
+    } catch (error) {
+        console.error("Error fetching equippable items:", error);
+        throw error;
+    }
+}
+
+export default { addEquippable, getEquippableById, getAllEquippables };

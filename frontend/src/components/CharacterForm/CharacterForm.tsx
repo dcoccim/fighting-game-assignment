@@ -25,7 +25,6 @@ export function CharacterForm({ onCharacterAdded }: CharacterFormProps) {
       value={formData.name}
       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
     />
-    <br />
     <label htmlFor="characterClass">Class:</label>
     <select 
       id="characterClass" 
@@ -41,7 +40,6 @@ export function CharacterForm({ onCharacterAdded }: CharacterFormProps) {
         </option>
       ))}
     </select>
-    <br />
     <button 
       type="submit" 
       onClick={() => handleSubmit(formData, setFormData, onCharacterAdded)} 

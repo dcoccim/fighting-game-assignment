@@ -6,27 +6,14 @@ export class Equipment implements EquipmentType {
     bodyGear: IBodyGear | null;
     legGear: ILegGear | null;
 
-    constructor() {
-        this.weapon = null;
-        this.headGear = null;
-        this.bodyGear = null;
-        this.legGear = null;
+    constructor(equipmentData?: EquipmentType) {
+        this.weapon = equipmentData?.weapon ?? null;
+        this.headGear = equipmentData?.headGear ?? null;
+        this.bodyGear = equipmentData?.bodyGear ?? null;
+        this.legGear = equipmentData?.legGear ?? null;
     }
 
-    addItem(item: EquippableType): void {
-        switch(item.kind) {
-            case 'weapon':
-                this.weapon = item as IWeapon;
-                break;
-            case 'headGear':
-                this.headGear = item as IHeadGear;
-                break;
-            case 'bodyGear':
-                this.bodyGear = item as IBodyGear;
-                break;
-            case 'legGear':
-                this.legGear = item as ILegGear;
-                break;
-        }
+    addToSlot(slot: keyof EquipmentType, item: EquippableType): void {
+        this[slot] = item as any;
     }
 }

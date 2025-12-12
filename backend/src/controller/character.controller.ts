@@ -1,6 +1,7 @@
 import characterService from "../service/character.service.js";
 import { toCharacterResponse } from "../dto/mapper/dto.mapper.js";
 import type { Request, Response } from "express";
+import { IncompatibleEquipError } from "../utils/errors.js";
 
 export async function postCharacter(req: Request, res: Response): Promise<void> {
     const characterData = req.body;
@@ -54,8 +55,28 @@ export async function getAllCharacters(req: Request, res: Response): Promise<voi
     }
 }
 
-export function updateCharacter(req: Request, res: Response): void {
-    res.status(200).send("Character updated");
+export async function updateCharacterEquip(req: Request, res: Response): Promise<void> {
+    try {
+        const characterId = req.params.id;
+        if (!characterId) {
+            console.warn("Character ID is missing in request parameters");
+            res.status(400).send("Character ID is required");
+            return;
+        }
+        const equipmentData = req.body;
+        const updatedCharacter = await characterService.updateCharacterEquip(characterId, equipmentData);
+        console.log("Character equipment updated:", updatedCharacter);
+        const characterResponse = toCharacterResponse(updatedCharacter!);
+        res.status(200).json(characterResponse);
+    } catch (error) {
+        if (error instanceof IncompatibleEquipError) {
+            console.warn("Incompatible equipment error:", error.message);
+            res.status(400).json({ message: error.message });
+            return;
+        }
+        console.error("Error updating character equipment:", error);
+        res.status(500).send("Error updating character equipment");
+    }
 }
 
 export function deleteCharacter(req: Request, res: Response): void {
