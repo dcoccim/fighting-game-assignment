@@ -1,3 +1,4 @@
+import { handleBattleSubmit } from "./arena.functions";
 import type { ArenaProps } from "./arena.types";
 
 export function Arena({character1, character2}: ArenaProps) {
@@ -11,7 +12,7 @@ export function Arena({character1, character2}: ArenaProps) {
             ) : (
                 <div>
                     <p>{character1.name} vs {character2.name}</p>
-                    <button>Start Battle</button>
+                    <button onClick={() => handleBattleSubmit(character1.id!, character2.id!)}>Start Battle</button>
                 </div>
             )}
         </div>

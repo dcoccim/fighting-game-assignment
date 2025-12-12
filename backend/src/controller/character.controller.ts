@@ -1,5 +1,5 @@
 import characterService from "../service/character.service.js";
-import { toCharacterResponse } from "../dto/mapper/dto.mapper.js";
+import { toBattleResponse, toCharacterResponse } from "../dto/mapper/dto.mapper.js";
 import type { Request, Response } from "express";
 import { IncompatibleEquipError } from "../utils/errors.js";
 
@@ -79,6 +79,20 @@ export async function updateCharacterEquip(req: Request, res: Response): Promise
     }
 }
 
-export function battle(req: Request, res: Response): void {
-    res.status(200).send("Battle executed");
+export async function battle(req: Request, res: Response): Promise<void> {
+    try {
+        const { character1Id, character2Id } = req.body;
+        if (!character1Id || !character2Id) {
+            console.warn("Character IDs are missing in request body");
+            res.status(400).send("Both character IDs are required");
+            return;
+        }
+        const result = await characterService.battle(character1Id, character2Id);
+        console.log(`Battle completed between characters ${character1Id} and ${character2Id}`);
+        const battleResponse = toBattleResponse(result.winner, result.loser, result.log);
+        res.status(200).json(battleResponse);
+    } catch (error) {
+        console.error("Error initiating battle:", error);
+        res.status(500).send("Error initiating battle");
+    }
 }

@@ -25,6 +25,7 @@ export function CharacterCard({
                 />
                 <h3>{character.name}</h3>
                 <p>{character.characterClass.name}</p>
+                <p>Wins: {character.wins} | Losses: {character.losses}</p>
             </div>
             {expanded && (
                 <div className="character-details">

@@ -99,3 +99,11 @@ export function toEquippableListResponse(equippables: EquippableType[]): Equippa
 
     return response;
 }
+
+export function toBattleResponse(winner: Character, loser: Character, log: string[]): {winner: CharacterResponseDTO, loser: CharacterResponseDTO, log: string[]} {
+    return {
+        winner: toCharacterResponse(winner),
+        loser: toCharacterResponse(loser),
+        log,
+    };
+}

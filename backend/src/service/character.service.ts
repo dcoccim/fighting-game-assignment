@@ -6,6 +6,7 @@ import characterClassService from "./characterClass.service.js";
 import type { CharacterType, EquipmentType, EquippableType } from "@shared/types.js";
 import equippableService from "./equippable.service.js";
 import { IncompatibleEquipError } from "../utils/errors.js";
+import { Arena } from "../gameObjects/Arena.js";
 
 async function addCharacter(characterData: CreateCharacterDTO) : Promise<Character> {
     try {
@@ -85,4 +86,27 @@ async function updateCharacterEquip(characterId: string, equipmentData: any): Pr
     }
 }
 
-export default { addCharacter, getCharacterById, getAllCharacters, updateCharacterEquip };
+async function battle(character1Id: string, character2Id: string): Promise<{winner: Character; loser: Character, log: string[]}> {
+    try {
+        console.debug(`Initiating battle between characters ${character1Id} and ${character2Id}`);
+        const character1 = await getCharacterById(character1Id);
+        const character2 = await getCharacterById(character2Id);
+
+        if (!character1 || !character2) {
+            throw new Error("Characters not found for battle.");
+        }
+        const arena = new Arena(character1, character2);
+        const winner = arena.startBattle();
+        console.info(`Battle completed between characters ${character1.name} and ${character2.name}`);
+        arena.currentAttacking.wins += 1;
+        arena.currentDefending.losses += 1;
+        const updatedWinner = await characterRepository.updateCharacter(arena.currentAttacking);
+        const updatedLoser = await characterRepository.updateCharacter(arena.currentDefending);
+        return { winner: updatedWinner, loser: updatedLoser, log: arena.battleLog };
+    } catch (error) {
+        console.error(`Error during battle between characters ${character1Id} and ${character2Id}:`, error);
+        throw error;
+    }
+}
+
+export default { addCharacter, getCharacterById, getAllCharacters, updateCharacterEquip, battle };
