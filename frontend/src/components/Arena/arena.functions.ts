@@ -1,4 +1,15 @@
-export function handleBattleSubmit(character1Id: string, character2Id: string) {
+import type { CharacterType } from "../../../../shared/types";
+
+export function handleBattleSubmit(
+    character1Id: string, 
+    character2Id: string, 
+    setCharacterList: React.Dispatch<React.SetStateAction<CharacterType[]>>,
+    setBattleLog: (log: string[] | null) => void,
+    setSelectedChars: React.Dispatch<React.SetStateAction<{
+        character1: CharacterType | null;
+        character2: CharacterType | null;
+    }>>
+) {
     return fetch(`http://localhost:3000/api/characters/battle`, {
         method: "POST",
         headers: {
@@ -9,10 +20,22 @@ export function handleBattleSubmit(character1Id: string, character2Id: string) {
         if (!response.ok) {
             throw new Error("Battle request failed");
         }
-        return response.text();
+        return response.json();
     }).then(data => {
-        console.log("Battle result:", data);
-        return data;
+        setBattleLog(data.log ?? null);
+        setCharacterList((prevChars: CharacterType[]) => {
+            return prevChars.map((char: CharacterType): CharacterType => {
+            if (char.id === data.winner.id) {
+                return data.winner as CharacterType;
+            } else if (char.id === data.loser.id) {
+                return data.loser as CharacterType;
+            } else {
+                return char;
+            }
+            });
+        });
+        setSelectedChars({ character1: null, character2: null });
+      return data;
     }).catch(error => {
         console.error("Error during battle request:", error);
         throw error;

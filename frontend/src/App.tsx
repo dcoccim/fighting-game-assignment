@@ -18,7 +18,12 @@ function App() {
 
   return (
     <>    
-      <Arena character1={character1} character2={character2} />
+      <Arena 
+        character1={character1} 
+        character2={character2} 
+        setCharacterList={setCharacterList} 
+        setSelectedChars={setSelectedChars}
+      />
       <CharacterForm onCharacterAdded={char => setCharacterList([...characterList, char])} />
       <CharacterList 
         characterList={characterList} 
